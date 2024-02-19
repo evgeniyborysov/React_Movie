@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import AppBar from "./components/AppBar";
 import { BasicPagination } from "./components/Pagination";
 
-// https://api.themoviedb.org/3/movie/popular?api_key=1c72b657d9a077a9e86fd0a692d417c2&language=en-US&page=1
-//1c72b657d9a077a9e86fd0a692d417c2
 const API_KEY = process.env.REACT_APP_API_KEY;
+const TOKEN = process.env.TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 function App() {
@@ -25,14 +24,13 @@ function App() {
 			method: "GET",
 			headers: {
 				accept: "application/json",
-				Authorization:
-					"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxYzcyYjY1N2Q5YTA3N2E5ZTg2ZmQwYTY5MmQ0MTdjMiIsInN1YiI6IjYwNzcxMGMzMWIxZjNjMDA0MGQwNjYwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mzo2JvU2z6OZrwEw0yiTajVjDVvwFtzVaUDUjk9EmyE",
+				Authorization: TOKEN,
 			},
 		};
 		setLoading(true);
 		try {
 			const response = await fetch(
-				`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${+page}`,
+				`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
 				options
 			);
 			const data = await response.json();
