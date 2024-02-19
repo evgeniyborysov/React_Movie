@@ -17,14 +17,26 @@ function App() {
 	const [page, setPage] = useState(1);
 	const [pageQty, setPageQty] = useState(500);
 	const [isSearch, setIsSearch] = useState(false);
+	console.log(movies);
 
 	const getMovies = async (page) => {
+		console.log(page);
+		const options = {
+			method: "GET",
+			headers: {
+				accept: "application/json",
+				Authorization:
+					"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxYzcyYjY1N2Q5YTA3N2E5ZTg2ZmQwYTY5MmQ0MTdjMiIsInN1YiI6IjYwNzcxMGMzMWIxZjNjMDA0MGQwNjYwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mzo2JvU2z6OZrwEw0yiTajVjDVvwFtzVaUDUjk9EmyE",
+			},
+		};
 		setLoading(true);
 		try {
 			const response = await fetch(
-				`${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${page}`
+				`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${+page}`,
+				options
 			);
 			const data = await response.json();
+			console.log(data);
 			setMovies(data.results);
 		} catch (error) {
 			setError(error);
@@ -48,8 +60,8 @@ function App() {
 	};
 
 	useEffect(() => {
-		getMovies();
-	}, []);
+		getMovies(page);
+	}, [page]);
 
 	useEffect(() => {
 		if (isSearch) {
